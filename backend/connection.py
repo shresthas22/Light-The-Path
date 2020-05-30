@@ -6,7 +6,15 @@ Restful API
 
 Comments: I need to find a way to automate package installation, docker might come in handy
 
-To RUN: Install packages, export FLASK_APP=connection.py, flask run
+To RUN: 
+
+Install packages using:
+pip install < requirements.txt 
+
+Then in cmd:
+
+export FLASK_APP=connection.py
+flask run
 
 """
 from flask import Flask
