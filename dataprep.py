@@ -45,7 +45,7 @@ startDates = {}
 for city in cities:
     
     cityData = covidData[covidData.county == city]
-    row = np.searchsorted(cityData.cases, 100)
+    row = np.searchsorted(cityData.cases, 25)
     try:
         startDates[city] = cityData.iloc[row, 0]
     except IndexError as e:
@@ -105,7 +105,7 @@ for city, start in startDates.items():
         fig, ax = plt.subplots(figsize=(8, 5))
 
         plt.plot(combinedData[["Relative NO2 Levels", 
-            "Relative PM2.5 Levels"]].rolling(5).mean())
+            "Relative PM2.5 Levels"]].rolling(7).mean())
         
         ax.legend(loc='best')
         ax.set_xlabel("Days since start")
