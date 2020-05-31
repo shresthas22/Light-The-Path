@@ -1,4 +1,5 @@
-from connection import app, mongo_connection
+from connection import app
+from connection import mongo_connection
 
 from flask import jsonify
 from flask import request
