@@ -24,11 +24,11 @@ from config import config
 app = Flask(__name__)
 app.config['MONGO_DBNAME'] = config.db_name
 app.config['MONGO_URI'] = config.connection_url
-
-import create
 import read
-import update
-import delete
+# import create
+
+# import update
+# import delete
 
 @app.route('/')
 def hello_world():
