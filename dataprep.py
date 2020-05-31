@@ -2,7 +2,7 @@ import pandas as pd
 import os
 import numpy as np
 import matplotlib.pyplot as plt
-
+import seaborn as sns
 
 data2020 = pd.read_csv(
     os.path.join(
@@ -55,6 +55,7 @@ for city in cities:
 nyc = {'Brooklyn', 'Manhattan', 'Queens', 'Staten Island', 'The Bronx'}
 
 
+sns.set_style("dark")
 
 for city, start in startDates.items():
 
@@ -101,16 +102,28 @@ for city, start in startDates.items():
         combinedData["Relative NO2 Levels"] = combinedData["median_2020"]["no2"] / combinedData["median_2019"]["no2"]
         combinedData["Relative PM2.5 Levels"] = combinedData["median_2020"]["pm25"] / combinedData["median_2019"]["pm25"]
         
+        outputData = combinedData.reset_index()
+        outputData.columns = ['_'.join(col).strip('_') 
+            for col in outputData.columns.values]
         
+        outputData.to_csv(os.path.join("output", 
+            f"{city}_from_{start}.csv"), index=False)
+        
+
         fig, ax = plt.subplots(figsize=(8, 5))
 
-        plt.plot(combinedData[["Relative NO2 Levels", 
-            "Relative PM2.5 Levels"]].rolling(7).mean())
+        ax.plot(combinedData[["Relative NO2 Levels", 
+            "Relative PM2.5 Levels"]].rolling(7).mean().reset_index(level=0, drop=True))
         
-        ax.legend(loc='best')
+        ax.legend(["Relative NO2 Levels", 
+            "Relative PM2.5 Levels"], loc = 'best')
         ax.set_xlabel("Days since start")
         ax.set_ylabel("Relative pollution")
-        plt.savefig(os.path.join("output", "Relative pollution for" + f" {city} starting from {start}"))
+        fig.suptitle("Relative pollution for" + 
+            f" {city} starting from {start}", fontsize=16)
+        ax.set_title("2020 pollution levels as a fraction of 2019 levels")
+        plt.savefig(os.path.join("output", "Relative pollution for" + 
+            f" {city} starting from {start}"))
         plt.clf()
     except KeyError as e:
         print(e)
