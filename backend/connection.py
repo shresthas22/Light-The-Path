@@ -16,6 +16,7 @@ Then in cmd:
 export FLASK_APP=connection.py
 flask run
 
+
 """
 from flask import Flask
 from flask_pymongo import pymongo
@@ -28,7 +29,7 @@ import numpy as np
 app = Flask(__name__)
 app.config['MONGO_DBNAME'] = config.db_name
 app.config['MONGO_URI'] = config.connection_url
-import read
+import read, covid_api, create, update, delete
 # import create
 
 # import update
